@@ -143,7 +143,7 @@ CCB_ADDRESS = $CCB
 #SEC_CLIENT_AUTHENTICATION_METHODS= FS, PASSWORD
 _EOF_
 
-  condor_store_cred -f /etc/condor/condorSharedSecret -p $SHARED_SECRET
+  #condor_store_cred -f /etc/condor/condorSharedSecret -p $SHARED_SECRET
 fi
 
 exec /usr/bin/supervisord -c /etc/supervisord.conf

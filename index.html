@@ -1,0 +1,112 @@
+---
+layout: default
+---
+                    <div class="row">
+                      <div class="col-md-5 col-md-offset-1">
+                        <p align="justify"> <b>SCAR</b> is a framework to transparently execute containers out of <a href="https://www.docker.com/"> Docker </a> images in <a href="https://aws.amazon.com/lambda/"> AWS Lambda</a>, in order to run applications and code in virtually any programming language on AWS Lambda.
+                          <b>SCAR</b> provides the benefits of with the execution environment you decide, provided as a Docker image available in Docker Hub. It is probably the easiest, most convenient approach to run generic applications on AWS Lambda, as well as code in your favourite programming language, not only in those languages supported by AWS Lambda.
+                          <b>SCAR</b> also supports a High Throughput Computing Programming Model to create highly-parallel event-driven file-processing serverless applications that execute on customized runtime environments provided by Docker containers run on AWS Lambda.
+                        </p>
+                      </div>
+                      <div class="col-md-5 col-md-offset-1 text-center">
+                        <img src="{{ site.data.global.img_url }}lambda2.png" width="620" />
+                      </div>
+                    </div>
+                    <section id="features" class="row-gray">
+                      <div class="row">
+                         <div class="col-md-12 text-center">
+                            <h2 class="section-heading">SCAR Main Features</h2>
+                            </br>
+                         </div>
+                      </div> 
+
+                      <div class="row text-center">
+                        <div class="col-md-4">
+                            <span class="fa-stack fa-4x">
+                                <i class="fa fa-sellsy fa-stack-1x fa-inverse" style="padding-left:40px;"></i>
+                            </span>
+                            <h4 class="provider" style="padding-left:40px;">Serverless Computing</h4>
+                            <p class="text-muted">Deploy your applications under a serverless environment, with no need to deploy your own cluster.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="fa-stack fa-4x">
+                                <i class="fa fa-bar-chart fa-stack-1x fa-inverse" style="padding-left:40px;"></i>
+                            </span>
+                            <h4 class="provider" style="padding-left:40px;">High Scalability</h4>
+                            <p class="text-muted">The usage of <a href="https://aws.amazon.com/lambda/"> AWS Lambda</a> offers computing resources with almost no scalling limits.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="fa-stack fa-4x">
+                                 <i class="fa fa-th fa-stack-1x fa-inverse" style="padding-right:40px;"></i>
+                            </span>
+                            <h4 class="provider" style="padding-right:40px;">Customized Environment</h4>
+                            <p class="text-muted-right">SCAR provides a customized environmet for the apps based on Docker images hosted on <a href="https://hub.docker.com/" target="_blank">Docker Hub</a> and <a href="https://github.com/indigo-dc/udocker" target="_blank">udocker</a>.</p>
+                        </div>
+                      </div>
+
+                      <div class="row text-center">
+                          <div class="col-md-4">
+                              <span class="fa-stack fa-4x">
+                                  <i class="fa fa-terminal fa-stack-1x fa-inverse" style="padding-left:40px;"></i>
+                              </span>
+                              <h4 class="provider" style="padding-left:40px;">CLI interface</h4>
+                              <p class="text-muted">Unleash the power of SCAR by using the Command Line Interface, available at the <a href="https://github.com/grycap/scar" target="_blank">GitHub</a> repository.</p>
+                          </div>
+                          <div class="col-md-4">
+                              <span class="fa-stack fa-4x">
+                                 <i class="fa fa-code-fork fa-stack-1x fa-inverse" style="padding-left:40px;"></i>
+                              </span>
+                              <h4 class="provider" style="padding-left:40px;">New Programming Model</h4>
+                              <p class="text-muted">SCAR introduces a programming model that can be effectively used to process files on demand with <a href="https://aws.amazon.com/lambda/"> AWS Lambda</a> and <a href="https://aws.amazon.com/s3/"> S3</a></p>
+                          </div>
+                          <div class="col-md-4">
+                              <span class="fa-stack fa-4x">
+                                  <i class="fa fa-file-code-o fa-stack-1x fa-inverse" style="padding-right:40px;"></i>
+                              </span>
+                              <h4 class="provider" style="padding-right:40px;">Python-powered strength</h4>
+                              <p class="text-muted-right">Proudly developed in <a href="https://www.python.org/" target="_blank">Python</a> and distributed as open-source under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache 2.0 License</a>.</p>
+                          </div>
+                      </div>
+                    </section>
+
+                    <div class="row">
+                      <div class="col-md-10 col-md-offset-1">
+                        <!--<h3 style="margin-top:50px;"> Approach </h3>-->
+                        <h2 class="section-heading text-center"> Approach </h2>
+                        <p align="justify"> SCAR provides a command-line interface to create a Lambda function to execute a container out of a Docker image stored in Docker Hub. Each invocation of the Lambda function will result in the execution of such a container (optionally executing a shell-script inside the container for further versatility).
+                            The following underlying technologies are employed:
+                        </p>
+                        <ul>
+                            <li>udocker: A tool to execute Docker containers in user space. </li>
+                            <ul>
+                               <li>The Fakechroot execution mode of udocker is employed, since Docker containers cannot be natively run on AWS Lambda. Isolation is provided by the boundary of the Lambda function itself.</li>
+                            </ul>
+                            <li> AWS Lambda: A serverless compute service that runs Lambda functions in response to events. </li>
+                        </ul>
+                        <p align="justify"> SCAR can optionally define a trigger so that the Lambda function is executed whenever a file is uploaded to an Amazon S3 bucket. This file is automatically made available to the underlying Docker container run on AWS Lambda so that an user-provided shell-script can process the file. See the Programming Model for more details.</p>
+                        <!--<h3> Architecture </h3>
+                        <p> A brief description of the SCAR architecture would be here. Moreover we can add a figure. But I'll wait till the paper has been published.
+                        </p>-->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-md-offset-1">
+                        <h2 class="section-heading text-center"> Limitations </h2>
+                        <p> The limitations of SCAR are the current limitations of the serverless service, i.e. <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html"> AWS Lambda limitations</a>. The most important are:</p>
+                        <ul>
+                            <li>The Docker container must fit within the current AWS Lambda limits:  </li>
+                            <ul>
+                               <li> Compressed + uncompressed Docker image under 512 MB (udocker needs to download the image before uncompressing it).</li>
+                               <li> Maximum execution time of 300 seconds (5 minutes).</li>
+                            </ul>
+                            <li> The following Docker images cannot be currently used:  </li>
+                            <ul>
+                               <li> Those based on Alpine Linux (due to the use of MUSL instead of GLIBC, which is not supported by Fakechroot).</li>
+                            </ul>
+                            <li> Installation of packages in the user-defined script (i.e. using yum, apt-get, etc.) is currently not possible.</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-4 col-md-offset-1 text-center">
+                        <img style="padding-top:150px;" src="{{ site.data.global.img_url }}Lego-House.png" width="700" />
+                      </div>
+                    </div>

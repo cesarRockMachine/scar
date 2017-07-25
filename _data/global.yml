@@ -1,0 +1,11 @@
+# Site Settings
+title: 'SCAR - Serverless Container-aware ARchitectures'
+description: 'A framework to transparently execute containers out of Docker images in AWS Lambda'
+url: 'https://grycap.github.io/scar/' # the base hostname & protocol for your site
+footer_text: 'Copyright © 2017, GRyCAP-I3M-UPV, Universitat Politècnica de València - 46022, Valencia, Spain '
+img_url: 'https://github.com/grycap/scar/raw/master/images/'
+
+# Admin Settings
+admin_name: 'Amanda Calatrava'
+admin_email: 'amcaar@i3m.upv.es'
+

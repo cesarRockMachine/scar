@@ -16,7 +16,7 @@ This [directory](https://github.com/grycap/scar/tree/master/examples) includes d
 * [ImageMagick](https://www.imagemagick.org), a tool to manipulate images.
 * [MrBayes](http://mrbayes.sourceforge.net/), a scientific application for bayesian inference of Phylogeny.
 * [Theano](http://deeplearning.net/software/theano/), a Python library that allows you to define, optimize, and evaluate mathematical expressions involving multi-dimensional arrays efficiently.
-* [Darknet](https://pjreddie.com/darknet) is an open source neural network framework written in C and CUDA. For the example we will be using the library 'You only look once' [Yolo](https://pjreddie.com/darknet/yolo/) which is  is a state-of-the-art, real-time object detection system
+* [Darknet](https://pjreddie.com/darknet) is an open source neural network framework written in C and CUDA. For the example we will be using the library 'You only look once' [Yolo](https://pjreddie.com/darknet/yolo/) which is  is a state-of-the-art, real-time object detection system.
 
 Are you using SCAR for another application? Let us know by creating an issue in [GitHub](https://github.com/grycap/scar).
 

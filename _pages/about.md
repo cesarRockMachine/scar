@@ -18,6 +18,5 @@ This development has been supported by the following research projects:
 
 Publications would be listed here in the future.
 
-## Acknowledgements
+Also, the authors of SCAR would like to thank the developments of [udocker](https://github.com/indigo-dc/udocker)), that allows SCAR the deployment of Docker images in AWS Lambda.
 
-* [udocker](https://github.com/indigo-dc/udocker)

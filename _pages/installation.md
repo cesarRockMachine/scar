@@ -44,7 +44,7 @@ You need:
 
 The Lambda functions require an [IAM Role](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) in order to acquire the required permissions to access the different AWS services during its execution.
 
-There is a sample policy in the [lambda-execute-role.json](docs/aws/lambda-execute-role.json) file. This IAM Role should be created beforehand. There is further documentation on this topic in the ["Creating IAM roles"](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create.html) section of the AWS documentation.
+There is a sample policy in the [lambda-execute-role.json](https://grycap.github.io/scar/installation/docs/aws/lambda-execute-role.json) file. This IAM Role should be created beforehand. There is further documentation on this topic in the ["Creating IAM roles"](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create.html) section of the AWS documentation.
 
 ### Configuration file
 

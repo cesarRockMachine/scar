@@ -1,5 +1,5 @@
 main:
     - { url: 'https://grycap.github.io/scar/installation/', text: 'Getting Started' }
-    - { url: 'https://grycap.github.io/scar/examples/', text: 'Examples' }
-    - { url: 'https://grycap.github.io/scar/about/', text: 'About' }
+    #- { url: 'https://grycap.github.io/scar/examples/', text: 'Examples' }
+    #- { url: 'https://grycap.github.io/scar/about/', text: 'About' }
     - { url: 'https://github.com/grycap/scar', text: 'Fork on GitHub' }

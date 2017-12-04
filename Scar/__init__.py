@@ -15,6 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-__all__ = ['aws_client','command_parser','config','result','scar_utils']
+__all__ = ['aws_client','command_parser','config','result','scar_utils', 'validators']
 __version__ = '1.0.0'
 __author__ = 'Alfonso Perez'

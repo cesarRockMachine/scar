@@ -270,28 +270,24 @@ def rm():
         aws_client.delete_resources(aws_lambda.name, aws_lambda.output)
 
 
-def log(args):
+def log():
     try:
-        log_group_name = "/aws/lambda/%s" % args.name
         full_msg = ""
-        if args.log_stream_name:
-            response = aws_client.get_log().get_log_events(
-                logGroupName=log_group_name,
-                logStreamName=args.log_stream_name,
-                startFromHead=True
-            )
+        if aws_lambda.log_stream_name:
+            response = aws_client.get_log_events_by_group_name_and_stream_name(
+                aws_lambda.log_group_name,
+                aws_lambda.log_stream_name )
             for event in response['events']:
                 full_msg += event['message']
         else:
-            response = aws_client.get_log().filter_log_events(logGroupName=log_group_name)
+            response = aws_client.get_log_events_by_group_name(aws_lambda.log_group_name)
             data = []
 
             for event in response['events']:
                 data.append((event['message'], event['timestamp']))
 
             while(('nextToken' in response) and response['nextToken']):
-                response = aws_client.get_log().filter_log_events(logGroupName=log_group_name,
-                                                                             nextToken=response['nextToken'])
+                response = aws_client.get_log_events_by_group_name(aws_lambda.log_group_name, response['nextToken'])
                 for event in response['events']:
                     data.append((event['message'], event['timestamp']))
 
@@ -300,8 +296,8 @@ def log(args):
                 full_msg += sdata[0]
 
         response['completeMessage'] = full_msg
-        if args.request_id:
-            print (parse_aws_logs(full_msg, args.request_id))
+        if aws_lambda.request_id:
+            print (parse_aws_logs(full_msg, aws_lambda.request_id))
         else:
             print (full_msg)
 

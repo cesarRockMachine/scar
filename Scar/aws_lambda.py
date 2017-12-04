@@ -43,48 +43,56 @@ class AWSLambda(object):
 
     def __init__(self, aws_client):
         # Parameters needed to create the function in AWS
-        self.runtime = "python3.6"
-        self.environment = { 'Variables' : {} }
+        self.asynchronous_call = False
+        self.aws_client = aws_client
+        self.code = None
+        self.container_arguments = None
+        self.delete_all = False
         self.description = "Automatically generated lambda function"    
-        self.time = 300
-        self.memory = 512
-        self.tags = {}
-        self.log_retention_policy_in_days = 30
+        self.environment = { 'Variables' : {} }
         self.event = { "Records" : [
-                            { "eventSource" : "aws:s3",
-                              "s3" : {
-                                  "bucket" : {
-                                      "name" : ""},
-                                  "object" : {
-                                      "key" : "" }
-                                }
-                            }
-                        ]}
-        self.region = 'us-east-1'
-        self.role = None
-        self.name = None
-        self.image_id = None
-        self.handler = None
-        self.script = None
-        self.extra_payload = None
+                    { "eventSource" : "aws:s3",
+                      "s3" : {
+                          "bucket" : {
+                              "name" : ""},
+                          "object" : {
+                              "key" : "" }
+                        }
+                    }
+                ]}
         self.event_source = None
+        self.extra_payload = None
+        self.function_arn = None
+        self.handler = None
+        self.image_id = None
+        self.invocation_type = "RequestResponse"
         self.log_group_name = None
+        self.log_retention_policy_in_days = 30
+        self.log_stream_name = None
+        self.log_type = "Tail"
+        self.memory = 512
+        self.name = None
+        self.output = OutputType.PLAIN_TEXT
+        self.payload = "{}"
         self.recursive = False        
+        self.region = 'us-east-1'
+        self.request_id = None
+        self.role = None
+        self.runtime = "python3.6"
+        self.scar_call = None
+        self.script = None
+        self.tags = {}
+        self.time = 300
+        self.timeout_threshold = 10
         self.udocker_dir = "/tmp/home/.udocker"
         self.udocker_tarball = "/var/task/udocker-1.1.0-RC2.tar.gz"
-        self.timeout_threshold = 10
         self.zip_file_path = os.path.join(tempfile.gettempdir(), 'function.zip')
-        self.invocation_type = "RequestResponse"
-        self.log_type = "Tail"
-        self.asynchronous_call = False
-        self.payload = None
-        self.aws_client = aws_client
-        self.container_arguments = None
-        self.output = OutputType.PLAIN_TEXT
-        self.function_arn = None
-        self.scar_call = None
-        self.delete_all = False
-        self.code = None
+
+    def set_log_stream_name(self, stream_name):
+        self.log_stream_name = stream_name
+        
+    def set_request_id(self, request_id):
+        self.request_id = request_id
         
     def is_asynchronous(self):
         return self.asynchronous_call
@@ -210,7 +218,23 @@ class AWSLambda(object):
             scar_utils.finish_failed_execution()
 
     def get_argument_value(self, args, attr):
-        return args.__dict__[attr]
+        if attr in args.__dict__.keys():
+            return args.__dict__[attr]
+
+    def update_function_attributes(self, args):
+        if self.get_argument_value(args, 'memory'):
+            self.aws_client.update_function_memory(self.name, self.memory)
+        if self.get_argument_value(args, 'time'):
+            self.aws_client.update_function_timeout(self.name, self.time)
+        if self.get_argument_value(args, 'env'):
+            self.aws_client.update_function_env_variables(self.name, self.environment)        
+
+    def check_function_name(self):
+        if self.name:
+            if self.scar_call == 'init':
+                self.aws_client.check_function_name_exists(self.name)
+            elif (self.scar_call == 'rm') or (self.scar_call == 'run'):
+                self.aws_client.check_function_name_not_exists(self.name)
 
     def set_attributes(self, args):
         # First set command line attributes
@@ -224,25 +248,16 @@ class AWSLambda(object):
             except Exception as ex:
                 logging.error(ex)
         
+        self.check_function_name()
         self.set_required_environment_variables()
-        
-        if self.scar_call == 'init':
-            self.aws_client.check_function_name_exists(self.name)
-            # Next set the rest of mandatory variables
+        if self.name:
             self.handler = self.name + ".lambda_handler"
             self.log_group_name = '/aws/lambda/' + self.name
+        if self.scar_call == 'init':
             self.set_tags()
             self.set_code()
-        elif self.scar_call == 'rm':
-            self.aws_client.check_function_name_not_exists(self.name)
         elif self.scar_call == 'run':
-            self.aws_client.check_function_name_not_exists(self.name)
-            if self.get_argument_value(args, 'memory'):
-                self.aws_client.update_function_memory(self.name, self.memory)
-            if self.get_argument_value(args, 'time'):
-                self.aws_client.update_function_timeout(self.name, self.time)
-            if self.get_argument_value(args, 'env'):
-                self.aws_client.update_function_env_variables(self.name, self.environment)
+            self.update_function_attributes(args)
             if self.get_argument_value(args, 'script'):
                 self.set_payload(self.create_payload("script", self.get_escaped_script()))
             if self.get_argument_value(args, 'cont_args'):

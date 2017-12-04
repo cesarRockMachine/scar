@@ -103,6 +103,33 @@ class AWSClient(object):
                     file_list.append(content['Key'])
         return file_list
     
+    def get_log_events_by_group_name(self, log_group_name, next_token=None):
+        try:
+            if next_token: 
+                return self.get_log().filter_log_events(
+                    logGroupName=log_group_name, 
+                    nextToken=next_token)
+            else:
+                return self.get_log().filter_log_events(
+                    logGroupName=log_group_name)                
+        except ClientError as ce:
+            print("Error getting log events")
+            logging.error("Error getting log events for log group '%s': %s" % (log_group_name, ce))
+            scar_utils.finish_failed_execution()    
+    
+    def get_log_events_by_group_name_and_stream_name(self, log_group_name, log_stream_name):
+        try:        
+            return self.aws_client.get_log().get_log_events(
+                logGroupName=log_group_name,
+                logStreamName=log_stream_name,
+                startFromHead=True
+            )
+        except ClientError as ce:
+            print("Error getting log events")
+            logging.error("Error getting log events for log group '%s' and log stream name '%s': %s"
+                           % (log_group_name, log_stream_name, ce))
+            scar_utils.finish_failed_execution()     
+    
     def find_function_name(self, function_name):
         try:
             paginator = self.get_lambda().get_paginator('list_functions')

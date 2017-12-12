@@ -150,6 +150,7 @@ def parse_invocation_response(response):
                                          'RequestId' : response['ResponseMetadata']['RequestId']})
         else:
             logging.info("Function '%s' launched correctly" % aws_lambda.name)
+            print("Function '%s' launched correctly" % aws_lambda.name)
     else:
         # Transform the base64 encoded results to something legible
         response = scar_utils.parse_base64_response_values(response)
@@ -166,7 +167,7 @@ def parse_invocation_response(response):
         else:
             logging.info('SCAR: Request Id: %s' % response['ResponseMetadata']['RequestId'])
             logging.info(response['Payload'])
-            print('bitnRequest Id: %s' % response['ResponseMetadata']['RequestId'])
+            print('Request Id: %s' % response['ResponseMetadata']['RequestId'])
             print(response['Payload'])
         
 def process_event_source_calls():

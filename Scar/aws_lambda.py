@@ -193,7 +193,7 @@ class AWSLambda(object):
                
     def set_required_environment_variables(self):
         self.set_evironment_variable('UDOCKER_DIR', self.udocker_dir)
-        self.set_evironment_variable('UDOCKER_TARBALL', self.udocker_dir)
+        self.set_evironment_variable('UDOCKER_TARBALL', self.udocker_tarball)
         self.set_evironment_variable('TIMEOUT_THRESHOLD', str(self.timeout_threshold))
         self.set_evironment_variable('RECURSIVE', str(self.recursive))
         self.set_evironment_variable('IMAGE_ID', self.image_id)        
@@ -270,7 +270,7 @@ class AWSLambda(object):
         return scar_utils.escape_string(self.script.read())
 
     def get_parsed_cont_args(self):
-        return scar_utils.escape_list(self.cont_args)
+        return scar_utils.escape_list(self.container_arguments)
 
     def get_default_json_config(self):
         return { 'lambda_description' : self.description,

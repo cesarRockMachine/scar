@@ -166,7 +166,8 @@ def parse_invocation_response(response):
         else:
             logging.info('SCAR: Request Id: %s' % response['ResponseMetadata']['RequestId'])
             logging.info(response['Payload'])
-
+            print('bitnRequest Id: %s' % response['ResponseMetadata']['RequestId'])
+            print(response['Payload'])
         
 def process_event_source_calls():
     s3_file_list = aws_client.get_s3_file_list(aws_lambda.event_source)

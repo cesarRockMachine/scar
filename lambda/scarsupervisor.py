@@ -137,7 +137,7 @@ def create_event_file(file_content):
 def pre_process(event):
     create_event_file(json.dumps(event))
     prepare_udocker_environment()
-    prepare_udocker_container(os.environ['IMAGE_ID'])
+    prepare_udocker_container(os.environ['IMAGE_ID'],os.environ['REGISTRY_USER'],os.environ['REGISTRY_PASS'])
     check_s3_event_records(event)
     
 def check_s3_event_records(event):
@@ -176,7 +176,12 @@ def prepare_udocker_environment():
     os.makedirs(input_folder, exist_ok=True)
     os.makedirs(output_folder, exist_ok=True)
 
-def prepare_udocker_container(container_image_id):
+def prepare_udocker_container(container_image_id,registry_user=None,registry_pass=None):
+    
+    if registry_user is not None and registry_pass is not None:
+        username = "--username=" + registry_user
+        password = "--password=" + registry_pass
+        cmd_out = subprocess.check_output([udocker_bin, "login", username, password]).decode("utf-8")
     # Check if the container is already downloaded
     cmd_out = subprocess.check_output([udocker_bin, "images"]).decode("utf-8")
     if container_image_id not in cmd_out:

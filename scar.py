@@ -65,6 +65,10 @@ class Scar(object):
             Config.lambda_description = args.description
         if hasattr(args, 'image_id') and args.image_id:
             Config.lambda_env_variables['Variables']['IMAGE_ID'] = args.image_id
+        if hasattr(args, 'registry_user') and args.registry_user:
+            Config.lambda_env_variables['Variables']['REGISTRY_USER'] = args.registry_user
+        if hasattr(args, 'registry_pass') and args.registry_registry_pass:
+            Config.lambda_env_variables['Variables']['REGISTRY_PASS'] = args.registry_pass
         if hasattr(args, 'lambda_role') and args.lambda_role:
             Config.lambda_role = args.lambda_role
         if hasattr(args, 'time_threshold') and args.time_threshold:
@@ -934,6 +938,8 @@ class CmdParser(object):
         # Set the positional arguments
         parser_init.add_argument("image_id", help="Container image id (i.e. centos:7)")
         # Set the optional arguments
+        parser_init.add_argument("-u", "--user-registry", help="Username for Hub Docker")
+        parser_init.add_argument("-pw", "--password-registry", help="Password for Hub Docker")
         parser_init.add_argument("-d", "--description", help="Lambda function description.")
         parser_init.add_argument("-e", "--env", action='append', help="Pass environment variable to the container (VAR=val). Can be defined multiple times.")
         parser_init.add_argument("-n", "--name", help="Lambda function name")

@@ -938,8 +938,8 @@ class CmdParser(object):
         # Set the positional arguments
         parser_init.add_argument("image_id", help="Container image id (i.e. centos:7)")
         # Set the optional arguments
-        parser_init.add_argument("-u", "--user-registry", help="Username for Hub Docker")
-        parser_init.add_argument("-pw", "--password-registry", help="Password for Hub Docker")
+        parser_init.add_argument("registry_user", "-u", "--user-registry", help="Username for Hub Docker")
+        parser_init.add_argument("registry_pass", "-pw", "--password-registry", help="Password for Hub Docker")
         parser_init.add_argument("-d", "--description", help="Lambda function description.")
         parser_init.add_argument("-e", "--env", action='append', help="Pass environment variable to the container (VAR=val). Can be defined multiple times.")
         parser_init.add_argument("-n", "--name", help="Lambda function name")
